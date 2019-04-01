@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>funCalc</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    
+    <style>
+        .background{
+            background: dimgrey;
+        }
+        .backGround{
+            height: 600px;
+            width: 400px;
+        }
+        .screen{
+            background: grey;
+        }
+
+        .Screen{
+            height: 200px;
+            width: 375px;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+        .upText{
+            height: 50px;
+            width: 99%;
+            font-size: 45px;
+            text-align: right;
+        }
+        .function{
+            height: 50px;
+            width: 50px;
+            margin: 0 auto;
+            display: block;
+            margin-top: 16px;
+            font-size: 45px;
+            text-align: center;
+        }
+        .downText{
+            height: 50px;
+            width: 99%;
+            margin-top: 16px;
+            font-size: 45px;
+            text-align: right;
+        }
+        .button1{
+            position: absolute;
+            left: 20px;
+            top: 232px;
+
+        }
+        .button2{
+            position: absolute;
+            left: 20px;
+            top: 324px;
+        }
+        .button3{
+            position: absolute;
+            left: 20px;
+            top: 417px;
+        }
+        .button4{
+            position: absolute;
+            left: 20px;
+            top: 511px;
+        }
+        .click1{
+            width: 90px;
+            height: 88px;
+            padding: 20px;
+          }
+        .click2{
+            width: 90px;
+            height: 88px;
+            padding: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="backGround" id="backGround"></div>
+    <div class="Screen" id="Screen">
+        <input id="display1" type="text" class="upText">
+        <input id="display2" type="text" class="function">
+        <input id="display3" type="text" class="downText">
+    </div>
+    <div>
+        <div class="button1" id="button1">
+            <button onclick="set_number(1)" type="button" class="click1">1</button>
+            <button onclick="set_number(2)" type="button" class="click1">2</button>
+            <button onclick="set_number(3)" type="button" class="click1">3</button>
+            <button onclick="set_number(4)" type="button" class="click1">4</button>
+        </div>
+        <div class="button2" id="button2">
+            <button onclick="set_number(5)" type="button" class="click1">5</button>
+            <button onclick="set_number(6)" type="button" class="click1">6</button>
+            <button onclick="set_number(7)" type="button" class="click1">7</button>
+            <button onclick="set_number(8)" type="button" class="click1">8</button>
+        </div>
+        <div class="button3" id="button3">
+            <button onclick="set_number(9)" type="button" class="click1">9</button>
+            <button onclick="set_number(0)" type="button" class="click1">0</button>
+            <button onclick="set_result()" type="button" class="click2">=</button>
+            <button onclick="all_clear()" type="button" class="click2">c</button>
+        </div>
+        <div class="button4" id="button4">
+            <button onclick="set_type('+')" type="button" class="click2">+</button>
+            <button onclick="set_type('-')" type="button" class="click2">-</button>
+            <button onclick="set_type('*')" type="button" class="click2">*</button>
+            <button onclick="set_type('/')" type="button" class="click2">/</button>
+        </div>
+            <div class="point" id="point">
+                <button onclick="set_number('.')" type="button" class="click1">.</button>
+            </div>
+    </div>
+    <script>
+        var baGro = $("#backGround")
+        baGro.addClass("background")
+
+        var scre = $("#Screen")
+        scre.addClass("screen")
+    </script>
+    <script>
+        var num1 = []
+        var num2 = []
+        var func = ""
+        function set_number(number) {
+            if (func) {
+                if (num2.length == 0 && number == ".") {
+                    num2.push(0)
+                }
+                if (num2.length == 1 && num2.indexOf(0) == 0 && number != ".") {
+                    num2[0] = number
+                    $("#display3").val(num2.join(""))
+                    return;
+                }
+                if (num2.indexOf(".") >= 0 && number == "."){
+                    return;
+                } else {
+                    num2.push(number)
+                    $("#display3").val(num2.join(""))
+                }
+
+            } else {
+                if (num1.length == 0 && number == ".") {
+                    num1.push(0)
+                }
+                if (num1.length == 1 && num1.indexOf(0) == 0 && number != ".") {
+                    num1[0] = number
+                    $("#display1").val(num1.join(""))
+                    return;
+                }
+                if (num1.indexOf(".") >= 0 && number == ".") {
+                    return;
+                } else {
+                    num1.push(number)
+                }
+            }
+            $("#display1").val(num1.join(""))
+        }
+
+        function set_type(cal) {
+            func = cal
+            $("#display2").val(func)
+        }
+
+        function set_result() {
+            if(func=="+") {
+                alert(parseFloat(num1.join("")) + parseFloat(num2.join("")))
+            }
+            if(func=="-") {
+                alert(parseFloat(num1.join("")) - parseFloat(num2.join("")))
+            }
+            if(func=="*") {
+                alert(parseFloat(num1.join("")) * parseFloat(num2.join("")))
+            }
+            if(func=="/") {
+                alert(parseFloat(num1.join("")) / parseFloat(num2.join("")))
+            }
+        }
+        function all_clear() {
+            num1 = []
+            num2 = []
+            func = ""
+            $("#display1").val("")
+            $("#display3").val("")
+            $("#display2").val("")
+        }
+    </script>
+</body>
+</html>
